@@ -28,3 +28,6 @@ Thumbs.db
 .env.local
 .env.*.local
 
+# Runtime data (按天生成的打卡数据，不进入版本控制)
+server/data/*.json
+
