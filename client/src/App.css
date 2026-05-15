@@ -1,0 +1,590 @@
+:root {
+  --color-primary: #4f46e5;
+  --color-primary-hover: #4338ca;
+  --color-bg: #f8f9fa;
+  --color-surface: #ffffff;
+  --color-border: #e2e8f0;
+  --color-text: #1e293b;
+  --color-text-secondary: #64748b;
+  --radius: 8px;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.app {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.app-section {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+
+.section-placeholder {
+  color: var(--color-text-secondary);
+  text-align: center;
+  font-size: 14px;
+  padding: 20px 0;
+}
+
+.status-bar {
+  padding: 12px 16px;
+}
+
+/* punch-panel overrides moved to PunchPanel section below */
+
+.timeline {
+  flex: 1;
+  min-height: 200px;
+}
+
+.actions-bar {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  padding: 12px 16px;
+}
+
+.action-btn {
+  padding: 8px 20px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: #f0f0ff;
+}
+
+/* Timeline 组件样式 */
+.timeline-empty {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--color-text-secondary);
+}
+
+.timeline-empty-hint {
+  font-size: 12px;
+  margin-top: 4px;
+  opacity: 0.7;
+}
+
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.timeline-entry-group {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.timeline-entry-group:last-child {
+  border-bottom: none;
+}
+
+.timeline-item {
+  background: var(--color-surface);
+  padding: 12px;
+  transition: background 0.2s ease;
+}
+
+.timeline-item--editing {
+  background: #f0f4ff;
+}
+
+/* ===== Timeline Notes ===== */
+.timeline-item-notes {
+  position: relative;
+  max-height: 4.5em;
+  overflow: hidden;
+  margin-top: 2px;
+}
+
+.timeline-item-notes.expanded {
+  max-height: none;
+}
+
+.notes-content {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+
+.notes-toggle {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 2px 0;
+}
+
+.notes-toggle:hover {
+  text-decoration: underline;
+}
+
+/* ===== Timeline Fragment Items ===== */
+.fragment-list {
+  background: #fafafa;
+  border-top: 1px dashed var(--color-border);
+}
+
+.fragment-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 28px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  border-left: 2px solid #d1d5db;
+  margin-left: 12px;
+}
+
+.fragment-marker {
+  color: #9ca3af;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.fragment-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.fragment-time {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+}
+
+.fragment-dur {
+  background: #f3f4f6;
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-size: 11px;
+}
+
+.fragment-desc-text {
+  color: var(--color-text);
+  font-size: 12px;
+}
+
+.fragment-delete-btn {
+  background: none;
+  border: none;
+  color: #d1d5db;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+
+.fragment-delete-btn:hover {
+  color: #dc2626;
+}
+
+.duration-detail {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+.timeline-item-display,
+.timeline-item-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeline-item-times {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.time-display {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.time-separator {
+  color: var(--color-text-secondary);
+  font-size: 12px;
+}
+
+.time-duration {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  background: var(--color-bg);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.time-input {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 14px;
+  padding: 4px 8px;
+  border: 1px solid var(--color-primary);
+  border-radius: 4px;
+  outline: none;
+}
+
+.timeline-item-desc {
+  font-size: 14px;
+  color: var(--color-text);
+  padding-left: 2px;
+}
+
+.desc-empty {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+.desc-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--color-primary);
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.timeline-item-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.btn-edit,
+.btn-delete,
+.btn-save,
+.btn-cancel {
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid var(--color-border);
+  transition: all 0.2s ease;
+}
+
+.btn-edit {
+  background: var(--color-surface);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.btn-edit:hover {
+  background: #f0f0ff;
+}
+
+.btn-delete {
+  background: var(--color-surface);
+  color: #dc2626;
+  border-color: #dc2626;
+}
+
+.btn-delete:hover {
+  background: #fef2f2;
+}
+
+.btn-save {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+.btn-save:hover {
+  background: var(--color-primary-hover);
+}
+
+.btn-cancel {
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+}
+
+.btn-cancel:hover {
+  background: var(--color-bg);
+}
+
+/* ===== StatusBar ===== */
+.status-bar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.status-item {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.status-label {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+}
+
+.status-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* ===== PunchPanel ===== */
+.punch-panel {
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.punch-panel-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.first-punch-hint {
+  text-align: center;
+  color: var(--color-primary);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 4px 0;
+  background: #f0f0ff;
+  border-radius: var(--radius);
+}
+
+.tag-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 14px;
+  border: 2px solid var(--color-border);
+  border-radius: 20px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tag-btn:hover {
+  border-color: var(--tag-color, var(--color-primary));
+}
+
+.tag-btn.selected {
+  border-width: 2px;
+  font-weight: 600;
+}
+
+.tag-btn-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tag-btn.selected .tag-btn-dot {
+  background: #fff !important;
+}
+
+.desc-input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.desc-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 14px;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.desc-input:focus {
+  border-color: var(--color-primary);
+}
+
+.save-tag-btn {
+  padding: 6px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.save-tag-btn:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.save-tag-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.punch-btn {
+  padding: 12px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.punch-btn:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.punch-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ===== Notes Area (PunchPanel) ===== */
+.notes-area {
+  margin-top: 4px;
+}
+
+.notes-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 13px;
+  color: var(--color-text);
+  outline: none;
+  resize: vertical;
+  min-height: 60px;
+  font-family: inherit;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.notes-input:focus {
+  border-color: var(--color-primary);
+}
+
+/* ===== Fragment Area (PunchPanel) ===== */
+.fragment-area {
+  background: var(--color-bg);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.fragment-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.5px;
+}
+
+.fragment-inputs {
+  display: flex;
+  gap: 8px;
+}
+
+.fragment-duration-input {
+  width: 72px;
+  padding: 6px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 13px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.fragment-duration-input:focus {
+  border-color: var(--color-primary);
+}
+
+.fragment-desc-input {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 13px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.fragment-desc-input:focus {
+  border-color: var(--color-primary);
+}
+
+.fragment-submit-btn {
+  padding: 6px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  align-self: flex-end;
+}
+
+.fragment-submit-btn:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.fragment-submit-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (max-width: 520px) {
+  .app {
+    padding: 12px;
+    max-width: 100%;
+  }
+}
