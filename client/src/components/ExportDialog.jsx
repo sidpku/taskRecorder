@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './ExportDialog.css'
 
-export default function ExportDialog({ isOpen, onClose }) {
+export default function ExportDialog() {
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const [exporting, setExporting] = useState(false)
@@ -47,51 +47,44 @@ export default function ExportDialog({ isOpen, onClose }) {
     }
   }
 
-  if (!isOpen) return null
-
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content export-dialog" onClick={e => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>×</button>
-        <h2 className="modal-title">CSV 导出</h2>
-
-        {/* 快捷按钮 */}
-        <div className="export-shortcuts">
-          <button className="shortcut-btn" onClick={setToday}>今天</button>
-          <button className="shortcut-btn" onClick={setThisWeek}>本周</button>
-        </div>
-
-        {/* 日期选择 */}
-        <div className="export-dates">
-          <div className="date-field">
-            <label className="date-label">开始日期</label>
-            <input
-              type="date"
-              className="date-input"
-              value={startDate}
-              onChange={e => setStartDate(e.target.value)}
-            />
-          </div>
-          <div className="date-field">
-            <label className="date-label">结束日期</label>
-            <input
-              type="date"
-              className="date-input"
-              value={endDate}
-              onChange={e => setEndDate(e.target.value)}
-            />
-          </div>
-        </div>
-
-        {/* 导出按钮 */}
-        <button
-          className="export-btn"
-          onClick={handleExport}
-          disabled={!startDate || !endDate || exporting}
-        >
-          {exporting ? '导出中...' : '导出 CSV'}
-        </button>
+    <div className="export-inline">
+      {/* 快捷按钮 */}
+      <div className="export-shortcuts">
+        <button className="shortcut-btn" onClick={setToday}>今天</button>
+        <button className="shortcut-btn" onClick={setThisWeek}>本周</button>
       </div>
+
+      {/* 日期选择 */}
+      <div className="export-dates">
+        <div className="date-field">
+          <label className="date-label">开始日期</label>
+          <input
+            type="date"
+            className="date-input"
+            value={startDate}
+            onChange={e => setStartDate(e.target.value)}
+          />
+        </div>
+        <div className="date-field">
+          <label className="date-label">结束日期</label>
+          <input
+            type="date"
+            className="date-input"
+            value={endDate}
+            onChange={e => setEndDate(e.target.value)}
+          />
+        </div>
+      </div>
+
+      {/* 导出按钮 */}
+      <button
+        className="export-btn"
+        onClick={handleExport}
+        disabled={!startDate || !endDate || exporting}
+      >
+        {exporting ? '导出中...' : '导出 CSV'}
+      </button>
     </div>
   )
 }

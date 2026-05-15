@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { createPunch, createTag, updatePunch, createFragment } from '../api'
 
-export default function PunchPanel({ tags, isFirstPunch, onPunch, onTagsChange, lastPunch, date, onFragmentCreated }) {
-  const [selectedTags, setSelectedTags] = useState([])
+export default function PunchPanel({ selectedTags, onClearTags, isFirstPunch, onPunch, onTagsChange, lastPunch, date, onFragmentCreated }) {
   const [description, setDescription] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -50,14 +49,6 @@ export default function PunchPanel({ tags, isFirstPunch, onPunch, onTagsChange, 
     }
   }, [notes, saveNotes, lastPunch])
 
-  function toggleTag(tagName) {
-    setSelectedTags(prev =>
-      prev.includes(tagName)
-        ? prev.filter(n => n !== tagName)
-        : [...prev, tagName]
-    )
-  }
-
   function buildDescription() {
     const parts = []
     if (selectedTags.length > 0) {
@@ -82,7 +73,7 @@ export default function PunchPanel({ tags, isFirstPunch, onPunch, onTagsChange, 
         time: new Date().toISOString(),
         description: desc
       })
-      setSelectedTags([])
+      onClearTags?.()
       setDescription('')
       setNotes('')  // 新时间段开始，清空备注
       lastSavedNotesRef.current = ''
@@ -141,25 +132,10 @@ export default function PunchPanel({ tags, isFirstPunch, onPunch, onTagsChange, 
         <div className="first-punch-hint">记录一天的开始</div>
       )}
 
-      {/* 标签按钮区 */}
-      {tags.length > 0 && (
-        <div className="tag-buttons">
-          {tags.map(tag => (
-            <button
-              key={tag.id}
-              className={`tag-btn ${selectedTags.includes(tag.name) ? 'selected' : ''}`}
-              style={{
-                '--tag-color': tag.color || '#4f46e5',
-                borderColor: selectedTags.includes(tag.name) ? (tag.color || '#4f46e5') : undefined,
-                backgroundColor: selectedTags.includes(tag.name) ? (tag.color || '#4f46e5') : undefined,
-                color: selectedTags.includes(tag.name) ? '#fff' : undefined
-              }}
-              onClick={() => toggleTag(tag.name)}
-            >
-              <span className="tag-btn-dot" style={{ background: tag.color || '#4f46e5' }}></span>
-              {tag.name}
-            </button>
-          ))}
+      {/* 已选标签提示 */}
+      {selectedTags.length > 0 && (
+        <div className="selected-tags-hint">
+          已选标签：{selectedTags.join(', ')}
         </div>
       )}
 

@@ -1,4 +1,10 @@
-/* ExportDialog 特定样式 */
+/* ExportDialog 内联样式 */
+.export-inline {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .export-shortcuts {
   display: flex;
   gap: 8px;
@@ -24,8 +30,9 @@
 
 .export-dates {
   display: flex;
+  flex-direction: column;
   gap: 12px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .date-field {
