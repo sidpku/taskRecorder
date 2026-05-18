@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './ExportDialog.css'
+import { getBeijingDateString } from '../utils/beijingTime'
 
 export default function ExportDialog() {
   const [startDate, setStartDate] = useState('')
@@ -7,7 +8,7 @@ export default function ExportDialog() {
   const [exporting, setExporting] = useState(false)
 
   function formatDate(date) {
-    return date.toISOString().slice(0, 10)
+    return getBeijingDateString(date)
   }
 
   function setToday() {

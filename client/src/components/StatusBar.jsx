@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { parseBeijingTime } from '../utils/beijingTime'
 
 export default function StatusBar({ lastPunchTime }) {
   const [elapsed, setElapsed] = useState(0)
@@ -7,7 +8,7 @@ export default function StatusBar({ lastPunchTime }) {
     if (!lastPunchTime) return
 
     function calcMinutes() {
-      const diff = Date.now() - new Date(lastPunchTime).getTime()
+      const diff = Date.now() - parseBeijingTime(lastPunchTime).getTime()
       return Math.floor(diff / 60000)
     }
 
@@ -24,7 +25,7 @@ export default function StatusBar({ lastPunchTime }) {
     )
   }
 
-  const timeStr = new Date(lastPunchTime).toLocaleTimeString('zh-CN', {
+  const timeStr = parseBeijingTime(lastPunchTime).toLocaleTimeString('zh-CN', {
     hour: '2-digit',
     minute: '2-digit',
     hour12: false

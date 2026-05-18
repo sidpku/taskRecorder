@@ -6,12 +6,13 @@ import TagManager from './components/TagManager'
 import ExportDialog from './components/ExportDialog'
 import Timeline from './components/Timeline'
 import { getPunches, getTags, getFragments, createPunch } from './api'
+import { getBeijingDateString, toBeijingISOString } from './utils/beijingTime'
 
 function App() {
   const [punches, setPunches] = useState([])
   const [tags, setTags] = useState([])
   const [fragments, setFragments] = useState([])
-  const [date] = useState(() => new Date().toISOString().slice(0, 10))
+  const [date] = useState(() => getBeijingDateString())
   const [selectedTags, setSelectedTags] = useState([])
 
   const fetchFragments = useCallback(async () => {
@@ -63,7 +64,7 @@ function App() {
   async function handleTagPunch(tagName) {
     try {
       await createPunch({
-        time: new Date().toISOString(),
+        time: toBeijingISOString(),
         description: tagName
       })
       setSelectedTags([])

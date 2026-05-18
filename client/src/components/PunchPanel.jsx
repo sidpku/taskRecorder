@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { createPunch, createTag, updatePunch, createFragment } from '../api'
+import { toBeijingISOString } from '../utils/beijingTime'
 
 export default function PunchPanel({ selectedTags, onClearTags, isFirstPunch, onPunch, onTagsChange, lastPunch, date, onFragmentCreated }) {
   const [description, setDescription] = useState('')
@@ -70,7 +71,7 @@ export default function PunchPanel({ selectedTags, onClearTags, isFirstPunch, on
     setLoading(true)
     try {
       await createPunch({
-        time: new Date().toISOString(),
+        time: toBeijingISOString(),
         description: desc
       })
       onClearTags?.()

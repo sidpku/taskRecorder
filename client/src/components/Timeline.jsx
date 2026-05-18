@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { updatePunch, deletePunch, deleteFragment } from '../api'
+import { parseBeijingTime } from '../utils/beijingTime'
 
 function Timeline({ punches, fragments = [], date, onDataChange, onFragmentChange }) {
   const [editingId, setEditingId] = useState(null)
@@ -24,16 +25,16 @@ function Timeline({ punches, fragments = [], date, onDataChange, onFragmentChang
   // 将碎片归属到对应时间段
   function getFragmentsForEntry(entry) {
     return fragments.filter(f => {
-      const fEnd = new Date(f.endTime).getTime()
-      const eStart = new Date(entry.startTime).getTime()
-      const eEnd = new Date(entry.endTime).getTime()
+      const fEnd = parseBeijingTime(f.endTime).getTime()
+      const eStart = parseBeijingTime(entry.startTime).getTime()
+      const eEnd = parseBeijingTime(entry.endTime).getTime()
       return fEnd > eStart && fEnd <= eEnd
     })
   }
 
   // 计算时长（分钟）
   function calcDuration(startTime, endTime) {
-    const diffMs = new Date(endTime) - new Date(startTime)
+    const diffMs = parseBeijingTime(endTime) - parseBeijingTime(startTime)
     return Math.round(diffMs / 60000)
   }
 
@@ -48,7 +49,7 @@ function Timeline({ punches, fragments = [], date, onDataChange, onFragmentChang
   // 格式化时间显示
   function formatTime(timeStr) {
     if (!timeStr) return ''
-    const d = new Date(timeStr)
+    const d = parseBeijingTime(timeStr)
     if (isNaN(d.getTime())) return timeStr
     return d.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit', hour12: false })
   }

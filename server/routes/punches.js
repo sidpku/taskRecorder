@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { readDayFile, writeDayFile } from '../utils/data.js';
+import { getBeijingDateString, normalizeToBeijingISOString, parseBeijingTime } from '../utils/beijingTime.js';
 
 const router = Router();
 
@@ -15,18 +16,14 @@ function extractDate(timeStr) {
  * 获取今天的日期字符串 YYYY-MM-DD
  */
 function getTodayDate() {
-  const now = new Date();
-  const y = now.getFullYear();
-  const m = String(now.getMonth() + 1).padStart(2, '0');
-  const d = String(now.getDate()).padStart(2, '0');
-  return `${y}-${m}-${d}`;
+  return getBeijingDateString();
 }
 
 /**
  * 按时间升序排序记录
  */
 function sortByTime(records) {
-  return records.sort((a, b) => new Date(a.time) - new Date(b.time));
+  return records.sort((a, b) => parseBeijingTime(a.time) - parseBeijingTime(b.time));
 }
 
 // GET /api/punches?date=YYYY-MM-DD
@@ -44,10 +41,11 @@ router.post('/', (req, res) => {
     return res.status(400).json({ error: 'time is required' });
   }
 
-  const date = extractDate(time);
+  const normalizedTime = normalizeToBeijingISOString(time);
+  const date = extractDate(normalizedTime);
   const record = {
     id: uuidv4(),
-    time,
+    time: normalizedTime,
     description: description || ''
   };
 
@@ -78,7 +76,7 @@ router.put('/:id', (req, res) => {
   const { time, description, notes } = req.body;
 
   if (time !== undefined) {
-    records[index].time = time;
+    records[index].time = normalizeToBeijingISOString(time);
   }
   if (description !== undefined) {
     records[index].description = description;
